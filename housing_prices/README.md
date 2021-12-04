@@ -76,7 +76,7 @@ print(training_set.dtypes.unique())
 
 ### 1. Mean Housing Price per Neighborhood 
 <details>
-<summary>Click to display code!</summary>
+<summary>**Click to display code!**</summary>
 
 <p>
 
@@ -100,14 +100,76 @@ ax.tick_params(axis='x', labelrotation= 40, labelsize=15)   #rotating x labels s
 </p>
 </details>
 
+![Median Sale Price by Neighborhood](/../images/images/neighborhood_median_prices.png?raw=true)
 
 
+### 2. Feature/Target Correlation
+Heatmap that showing correlation each feature has with between features and Housing Price
+<details>
+<summary>**Click to display code!**</summary>
 
-2. Feature/Target Correlation Heatmap
-Here we will create a heatmap that shows the amount of correlation each feature has with 
-Housing Price, our target variable. 
+<p>
 
-![feature/target correlation](/../images/images/feature_target_correlation.png?raw=true)
+``` python
+#create a correlation heatmap to show how each feature correlates to our target
+plt.figure(figsize=(8, 12))
+heatmap = sns.heatmap(training_set.corr()[['SalePrice']].sort_values(by='SalePrice', ascending=False), \
+                        vmin=-1, vmax=1, annot=True, cmap='rocket')
+
+heatmap.set_title('Features Correlating with Sales Price', fontdict={'fontsize':18}, pad=16)
+```
+
+</p>
+</details>
+
+![Features and Target Correlation](/../images/images/feature_target_correlation.png?raw=true)
+
+### 3. Feature Correlation
+Heatmap that shows correlation between different features in the dataset. 
+<details>
+<summary>**Click to display code!**</summary>
+
+<p>
+
+``` python
+#create a correlation heatmap to show how each feature correlates to our target
+plt.figure(figsize=(8, 12))
+heatmap = sns.heatmap(training_set.corr}, pad=16)
+```
+
+</p>
+</details>
+
+![Feature Correlations](/../images/images/feature_correlations.png?raw=true)
+
+
+### 4. Distribution of Features
+Create histograms for each feature, as well as the target to visualize the distribution of the data. 
+<details>
+<summary>**Click to display code!**</summary>
+
+<p>
+
+``` python
+#plot histograms for each feature
+_ = training_set.hist(bins = 50, figsize = (25,20))
+```
+
+</p>
+</details>
+
+![Dataset Histograms](/../images/images/dataset_histograms.png?raw=true)
+
+
+### 5. Feature Engineering
+Next we are going to create  new features, we will create baths per square foot,  
+as well as a number of binary columns that represent if the homes have a certain attribute,  
+for example if they have a 2nd story, have a fireplace, etc. We will also binarize a few features  
+in place using the same technique. 
+
+We will also replace any null and infinite values with 0.  
+
+We will deal with normalizing the disitribution of our data in the next section using our Sklearn pipeline.
 
 ``` python
 #create new features
@@ -126,4 +188,62 @@ for sets in training_set, testing_set:
     #replace inf and na values with 0
     sets.replace([np.inf, -np.inf], 0, inplace=True)
     sets.fillna(0, inplace=True)
+
+# view correlation with the newly added and modified features included
+training_set.corrwith(training_set['SalePrice']).sort_values(ascending=False)
 ```
+
+
+
+<details>
+<summary>**Click to View Output (Correlation of Features with Target after Additions)**</summary>
+
+<p>
+
+SalePrice        1.000000
+OverallQual      0.790982
+GrLivArea        0.708624
+GarageCars       0.640409
+GarageArea       0.623431
+TotalBsmtSF      0.613581
+1stFlrSF         0.605852
+FullBath         0.560664
+TotRmsAbvGrd     0.533723
+YearBuilt        0.522897
+YearRemodAdd     0.507101
+MasVnrArea       0.472614
+has_fireplace    0.471908
+Fireplaces       0.466929
+has_porch        0.412959
+BsmtFinSF1       0.386420
+WoodDeckSF       0.324413
+2ndFlrSF         0.319334
+OpenPorchSF      0.315856
+HalfBath         0.284108
+LotArea          0.263843
+GarageYrBlt      0.261366
+has_garage       0.236832
+BsmtFullBath     0.227122
+BsmtUnfSF        0.214479
+LotFrontage      0.209624
+BedroomAbvGr     0.168213
+has_2nd_story    0.137656
+PoolArea         0.093708
+ScreenPorch      0.087143
+MoSold           0.046432
+3SsnPorch        0.046015
+BsmtHalfBath    -0.016844
+MiscVal         -0.021190
+LowQualFinSF    -0.025606
+YrSold          -0.028923
+BsmtFinSF2      -0.052965
+remodeled       -0.052965
+OverallCond     -0.077856
+MSSubClass      -0.084284
+baths_per_sf    -0.125778
+KitchenAbvGr    -0.135907
+EnclosedPorch   -0.183374
+dtype: float64
+
+</p>
+</details>
