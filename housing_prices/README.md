@@ -268,6 +268,7 @@ a single word alone.
 <summary> Click to display code! </summary>
 
 <p>
+``` python
 text = " ".join(complaint for complaint in df.complaint_description)                #join complaints together 
 wordcloud = WordCloud(stopwords=stop_words, background_color="aliceblue",           #create collocation wordcloud (pairs of words)
                      colormap = "tab10", width=2400, height=1000).generate(text)
@@ -275,7 +276,7 @@ wordcloud = WordCloud(stopwords=stop_words, background_color="aliceblue",       
 fig, ax = plt.subplots(figsize=(24,10))                                             #set figure size
 ax = plt.imshow(wordcloud, interpolation='bilinear')                                #display wordcloud
 plt.axis("off")                                                                     #remove axis                                                                #remove axis
-
+```
 </p>
 </details>
 
@@ -288,6 +289,7 @@ Now we will create a wordcloud for each class.
 <summary> Click to display code! </summary>
 
 <p>
+``` python
 complaint_classes = np.unique(df['assigned_division'].values)                       #create list of class names
 
 fig, axes = plt.subplots(3,2, figsize=(80, 40))                                     #prepare figure with subplots
@@ -304,6 +306,7 @@ for i, complaint_class in enumerate(complaint_classes):                         
     
     axes[i].imshow(wordcloud,interpolation='none')                                  #display the class on axes using its index to determine position in subplot
     axes[i].set_title(complaint_class, size = 60)                                   #set title of the wordcloud to the class name
+```
 </p>
 
 </details>
