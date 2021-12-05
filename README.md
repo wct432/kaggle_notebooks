@@ -322,7 +322,13 @@ Next we will define our preprocessing pipeline using Scikit-Learn.
 This pipeline will be responsible for normalizing the distribution of our features,  
 filling any n/a values as a precautionary (should have been addressed in prior steps),   
 and it will also one hot encode the categorical features. We will save the preprocessor  
-in our /models/ directory so that we can easily use it later. 
+in our /models/ directory so that we can easily use it later.    
+
+Normalizing the distribution of features is not necessary for tree based algorithms   
+like random forest and XGBoost because they split each node in the tree using one feature  
+at at time, and as a result the scale of other features is irrelevant. However, I found I   
+had slightly better results after using the quantile transformer to transform each feature   
+into a normal distribution.  
 
 ``` python
 #NUMERICAL PIPELINE
